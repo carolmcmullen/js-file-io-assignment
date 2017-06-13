@@ -1,7 +1,6 @@
 'use strict'
 
 const fs = require('fs')
-//import { readFile, readFileSync } from 'fs'
 
 class Employee {
   constructor (name, title, salary) {
@@ -15,11 +14,27 @@ class Employee {
     this.salary = salary
   }
 
+/*
   static parseFromFilePath (filePath) {
     let data = fs.readFileSync(filePath, 'utf8')
     let jSonData = JSON.parse(data)
     return new Employee(jSonData.name, jSonData.title, jSonData.salary)
   } 
+}
+*/
+
+ static parseFromFilePath = 
+   readFile =>
+    filePath =>
+      new Promise((resolve, reject) => {
+        readFile(filePath, (err, data) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(data)
+          }
+        })
+      })
 }
 
 module.exports = {
